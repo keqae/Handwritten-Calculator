@@ -1,4 +1,4 @@
 numpy
 tensorflow
-cv2
+opencv-python
 easyocr

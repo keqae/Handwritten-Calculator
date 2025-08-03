@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 
-# Add parent directory to Python path to find modules
+# add parent directory to Python path to find modules
 current_dir = Path(__file__).parent
 project_root = current_dir.parent  # Go up one level to the project root
 if str(current_dir) not in sys.path:
@@ -233,7 +233,6 @@ def train():
 
 
 def main():
-    download_easyocr_models()
     image = cv2.imread("../data/dataset/expressions_raw/0.png")
     visualiser.visualise(image, "segment")
 
