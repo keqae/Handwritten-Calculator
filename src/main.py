@@ -233,7 +233,10 @@ def train():
 
 
 def main():
-    image = cv2.imread("../data/dataset/expressions_raw/0.png")
+    path = "data/dataset/expressions_raw/0.png"
+
+    image = cv2.imread(path)
+
     visualiser.visualise(image, "segment")
 
 

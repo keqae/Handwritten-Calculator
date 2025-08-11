@@ -1,4 +1,4 @@
-
+import matplotlib.pyplot as plt
 import numpy as np
 import sys
 import tensorflow as tf
@@ -30,18 +30,18 @@ def visualise(img: np.ndarray | tf.Tensor, function: str) -> None:
         else:
             resized = resized.astype(np.uint8)
 
-    cv2.imshow("Visualising Before:", resized) # show image before function
+    plt.imshow(resized) # show image before function
 
     try:
         if function == "segment": # handle segment
             for image in getattr(ImageProcessor(training=True), function)(resized):
-                cv2.imshow("Visualising After:", cv2.resize(image, (360, 360), interpolation=cv2.INTER_AREA))
+                plt.imshow(cv2.resize(image, (360, 360), interpolation=cv2.INTER_AREA))
 
         else:
-            cv2.imshow("Visualising After:", cv2.resize(getattr(ImageProcessor(training=True), function)(resized), (360, 360), interpolation=cv2.INTER_AREA)) # show image after
+            plt.imshow(cv2.resize(getattr(ImageProcessor(training=True), function)(resized), (360, 360), interpolation=cv2.INTER_AREA)) # show image after
 
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+
+        plt.show()
         return
 
     except AttributeError: # if cant find the function, raise error
