@@ -35,7 +35,8 @@ def visualise(img: np.ndarray | tf.Tensor, function: str) -> None:
     try:
         if function == "segment": # handle segment
             for image in getattr(ImageProcessor(training=True), function)(resized):
-                plt.imshow(cv2.resize(image, (360, 360), interpolation=cv2.INTER_AREA))
+
+                plt.imshow(cv2.resize(image[1], (360, 360), interpolation=cv2.INTER_AREA))
 
         else:
             plt.imshow(cv2.resize(getattr(ImageProcessor(training=True), function)(resized), (360, 360), interpolation=cv2.INTER_AREA)) # show image after
