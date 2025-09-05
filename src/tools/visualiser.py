@@ -4,7 +4,9 @@ import sys
 import tensorflow as tf
 import cv2
 from pathlib import Path
+import matplotlib
 
+matplotlib.use("Agg")
 
 # calculate the project root
 project_root = Path(__file__).resolve().parent.parent.parent  # adjust parent count based on actual depth
