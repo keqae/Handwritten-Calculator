@@ -72,7 +72,7 @@ class ImageProcessor:
     def segment(self, image: np.ndarray):
         # closing morphological operations
         kernel = np.ones((3, 3), np.uint8)
-        image = cv2.morphologyEx(image, cv2.MORPH_CLOSE, kernel)
+        # image = cv2.morphologyEx(image, cv2.MORPH_CLOSE, kernel)
 
         # create reader object
         self.reader = easyocr.Reader(["en"], gpu=False)
@@ -181,8 +181,11 @@ class ImageProcessor:
                         processed.append(contour)
 
                 elif self.training:
+                    """
                     image = self.resize(image)
                     image = self.center(image)
+                    """
+                    
                     image = self.normalise(image)
                     image = self.binarise(image)
 

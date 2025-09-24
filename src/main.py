@@ -19,42 +19,6 @@ from image_processor import ImageProcessor
 from neural_network import ConvolutionalNeuralNetwork, cross_entropy_loss, softmax_crossentropy_backward
 
 
-def download_easyocr_models():
-    # make the model directory
-    home = str(Path.home())
-    model_dir = os.path.join(home, '.EasyOCR', 'model')
-    os.makedirs(model_dir, exist_ok=True)
-
-    # model urls from official easyocr repository
-    model_urls = {
-        'craft_mlt_25k.pth': 'https://github.com/JaidedAI/EasyOCR/releases/download/pre-v1.1.6/craft_mlt_25k.zip',
-        'english_g2.pth': 'https://github.com/JaidedAI/EasyOCR/releases/download/v1.3/english_g2.zip'
-    }
-
-    import ssl
-    # create an unverified context
-    ssl._create_default_https_context = ssl._create_unverified_context
-
-    # download and extract each model
-    for model_file, url in model_urls.items():
-        model_path = os.path.join(model_dir, model_file)
-
-        # skip if model already exists
-        if os.path.exists(model_path):
-            print(f"{model_file} already exists")
-            continue
-
-        print(f"Downloading {model_file}...")
-
-        try:
-            import urllib.request
-            print(f"Downloading {model_file}...")
-            urllib.request.urlretrieve(url, model_path)
-            print(f"Successfully downloaded {model_file}")
-        except Exception as e:
-            print(f"Failed to download {model_file}: {e}")
-            continue
-
 
 labels = {
     0: "zero",
@@ -233,11 +197,13 @@ def train():
 
 
 def main():
-    path = "data/dataset/expressions_raw/0.png"
+
+    path = "data/dataset/expressions_processed/12.png"
 
     image = cv2.imread(path)
 
     visualiser.visualise(image, "segment")
+
 
 
 

@@ -5,6 +5,8 @@ import tensorflow as tf
 import cv2
 from pathlib import Path
 import matplotlib
+import os
+
 
 matplotlib.use("Agg")
 
@@ -32,19 +34,30 @@ def visualise(img: np.ndarray | tf.Tensor, function: str) -> None:
         else:
             resized = resized.astype(np.uint8)
 
-    plt.imshow(resized) # show image before function
+    #plt.imshow(resized) # show image before function
 
     try:
         if function == "segment": # handle segment
-            for image in getattr(ImageProcessor(training=True), function)(resized):
+            #make folder to save all segmented contours in
+            os.makedirs("data/dataset/expressions_segmented", exist_ok=True)
+
+            for idx, image in enumerate(getattr(ImageProcessor(training=True), function)(resized)):
 
                 plt.imshow(cv2.resize(image[1], (360, 360), interpolation=cv2.INTER_AREA))
+                plt.axis("off")
+
+                plt.savefig(f"data/dataset/expressions_segmented/{idx}.png")
+                
 
         else:
             plt.imshow(cv2.resize(getattr(ImageProcessor(training=True), function)(resized), (360, 360), interpolation=cv2.INTER_AREA)) # show image after
 
+            plt.axis("off")
+            plt.savefig(f"data/visualiser_output/{function}.png")
+        
 
-        plt.show()
+        
+
         return
 
     except AttributeError: # if cant find the function, raise error
