@@ -42,20 +42,17 @@ def visualise(img: np.ndarray | tf.Tensor, function: str) -> None:
             #make folder to save all segmented contours in
             os.makedirs("data/dataset/expressions_segmented", exist_ok=True)
 
-            
-            for idx, image in enumerate(getattr(ImageProcessor(training=True), "segment")(img)):
+            processor = ImageProcessor(training=True)
 
-                if image.ndim == 1:
-                    plt.imshow(cv2.resize(image, (360, 360), interpolation=cv2.INTER_AREA))
-                    plt.axis("off")
+            segments = processor.segment(img)
 
-                    plt.savefig(f"data/dataset/expressions_segmented/{idx}.png")
-                
-                else:
-                    plt.imshow(cv2.resize(image[1], (360, 360), interpolation=cv2.INTER_AREA))
-                    plt.axis("off")
+            for idx, image in enumerate(segments):
+                resized = cv2.resize(image[0], (360, 360), interpolation=cv2.INTER_AREA)
 
-                    plt.savefig(f"data/dataset/expressions_segmented/{idx}.png")
+                plt.imshow(image[0], cmap="gray")
+                plt.axis("off")
+
+                plt.savefig(f"data/dataset/expressions_segmented/{idx}.png")
             
 
         else:

@@ -1,7 +1,5 @@
 import cv2
 import numpy as np
-import os
-import easyocr
 
 
 class ImageProcessor:
@@ -78,11 +76,35 @@ class ImageProcessor:
         # vertically project the image to form "peaks and valleys"
         projection = np.sum(image, axis=0)
 
-        print(f"shape before: {projection.shape}")
-        print(f"type before: {type(projection)}")
-        print(f"dimensions before: {projection.ndim}")
+        # find segmentation boundaries
+        segments = []
+        in_char = False
+        start = 0
+        char_idx = 0
 
-        return projection
+        for idx, column_value in enumerate(projection):
+            # keep track of where the character started
+            if column_value > 0 and not in_char:
+                in_char = True
+                start = idx
+
+            # end character region if valley detected
+            elif column_value == 0 and in_char:
+                in_char = False
+                end = idx
+                char_img = image[:, start:end]
+                segments.append((char_img, char_idx)) # add char idx
+
+                char_idx += 1 # increase character count
+
+        # handle case where last character reaches image boundary
+        if in_char:
+            char_img = image[:, start:]
+            segments.append((char_img. char_idx)) # add char idx
+
+        return segments
+
+
     
 
     # processing pipeline

@@ -197,12 +197,11 @@ def train():
 
 
 def main():
-
     path = "data/dataset/expressions_processed/2.png"
 
     image = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
 
-    visualiser.visualise_projection(image)
+    visualiser.visualise(image, "segment")
 
 
 
