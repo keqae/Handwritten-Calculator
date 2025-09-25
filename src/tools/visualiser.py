@@ -38,16 +38,25 @@ def visualise(img: np.ndarray | tf.Tensor, function: str) -> None:
 
     try:
         if function == "segment": # handle segment
+
             #make folder to save all segmented contours in
             os.makedirs("data/dataset/expressions_segmented", exist_ok=True)
 
-            for idx, image in enumerate(getattr(ImageProcessor(training=True), function)(resized)):
+            
+            for idx, image in enumerate(getattr(ImageProcessor(training=True), "segment")(img)):
 
-                plt.imshow(cv2.resize(image[1], (360, 360), interpolation=cv2.INTER_AREA))
-                plt.axis("off")
+                if image.ndim == 1:
+                    plt.imshow(cv2.resize(image, (360, 360), interpolation=cv2.INTER_AREA))
+                    plt.axis("off")
 
-                plt.savefig(f"data/dataset/expressions_segmented/{idx}.png")
+                    plt.savefig(f"data/dataset/expressions_segmented/{idx}.png")
                 
+                else:
+                    plt.imshow(cv2.resize(image[1], (360, 360), interpolation=cv2.INTER_AREA))
+                    plt.axis("off")
+
+                    plt.savefig(f"data/dataset/expressions_segmented/{idx}.png")
+            
 
         else:
             plt.imshow(cv2.resize(getattr(ImageProcessor(training=True), function)(resized), (360, 360), interpolation=cv2.INTER_AREA)) # show image after
@@ -55,10 +64,20 @@ def visualise(img: np.ndarray | tf.Tensor, function: str) -> None:
             plt.axis("off")
             plt.savefig(f"data/visualiser_output/{function}.png")
         
-
-        
-
         return
 
     except AttributeError: # if cant find the function, raise error
         raise AttributeError(f"Function '{function}' not found.")
+
+
+def visualise_projection(image: np.ndarray) -> None:
+    # vertically project the image
+    processor = ImageProcessor(training=True)
+    
+    projection = processor.segment(image)
+
+    # plot the projection
+    plt.bar(range(len(projection)), projection)
+
+    plt.axis("off")
+    plt.savefig("data/dataset/expressions_segmented/image.png")

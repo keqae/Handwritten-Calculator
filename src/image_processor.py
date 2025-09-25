@@ -70,49 +70,20 @@ class ImageProcessor:
         return canvas
 
     def segment(self, image: np.ndarray):
+
         # closing morphological operations
         kernel = np.ones((3, 3), np.uint8)
-        # image = cv2.morphologyEx(image, cv2.MORPH_CLOSE, kernel)
+        image = cv2.morphologyEx(image, cv2.MORPH_CLOSE, kernel)
 
-        # create reader object
-        self.reader = easyocr.Reader(["en"], gpu=False)
+        # vertically project the image to form "peaks and valleys"
+        projection = np.sum(image, axis=0)
 
-        # read image
-        results = self.reader.readtext(image, detail=1)
+        print(f"shape before: {projection.shape}")
+        print(f"type before: {type(projection)}")
+        print(f"dimensions before: {projection.ndim}")
 
-        for idx, (bbox, text, conf) in enumerate(results):
-            # obtain bounding box coordinates (corners)
-            pts = np.array(bbox).astype(int)
-            x_min = np.min(pts[:, 0])
-            x_max = np.max(pts[:, 0])
-            y_min = np.min(pts[:, 1])
-            y_max = np.max(pts[:, 1])
-
-            # crop images out
-            cropped = image[y_min:y_max, x_min:x_max]
-            yield idx, cropped
-
-        """
-        # find contours
-        contours, _ = cv2.findContours(image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-        # filter out unwanted contours
-        valid_contours = []
-        for idx, contour in enumerate(contours):
-            rect = cv2.boundingRect(contour)
-            x, y, w, h = rect
-            if w >= min_w and h >= min_h:
-                valid_contours.append((x, (x, y, w, h)))  # use x-coordinate for sorting
-
-        # sort contours from left to right
-        sorted_contours = sorted(valid_contours, key=lambda item: item[0])
-
-        # yield each cropped contour, sorted left to right
-        for idx, (x, y, w, h) in enumerate([coords for _, coords in sorted_contours]):
-            cropped_contour = image[y:y + h, x:x + w]
-            yield idx, cropped_contour
-        """
-
+        return projection
+    
 
     # processing pipeline
     def process(self, image: np.ndarray, debug=False) -> list[np.ndarray] | np.ndarray | None:
