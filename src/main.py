@@ -19,25 +19,6 @@ from image_processor import ImageProcessor
 from neural_network import ConvolutionalNeuralNetwork, cross_entropy_loss, softmax_crossentropy_backward
 
 
-
-labels = {
-    0: "zero",
-    1: "one",
-    2: "two",
-    3: "three",
-    4: "four",
-    5: "five",
-    6: "six",
-    7: "seven",
-    8: "eight",
-    9: "nine",
-    10: "add",
-    11: "sub",
-    12: "mul",
-    13: "div",
-}
-
-
 def process_dataset(dataset_select: str):
 
     dataset = None
@@ -194,6 +175,12 @@ def train():
     # evaluate model after training
     test_loss, test_acc = model.evaluate(test_dataset)
     print(f"Test accuracy: {test_acc}, Test loss: {test_loss:}")
+
+    return model
+
+
+def pipeline():
+    pass
 
 
 def main():
