@@ -21,12 +21,10 @@ def parse(classified: list[int]) -> str:
     expression = ""
 
     # iterate through classified symbol list and form the expression
-    for symbol_id in classified:
+    for (symbol_id, idx) in classified:
         expression += labels[symbol_id]
+    
+    print(expression)
     
     return eval(expression)
 
-
-symbols = [7, 12, 9]
-
-print(f"7*9 = {parse(symbols)}")

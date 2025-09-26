@@ -165,13 +165,14 @@ class ImageProcessor:
                 image = self.grayscale(image)
                 image = self.denoise(image)
                 image = self.invert(image)
+                image = self.binarise(image)
 
                 if not self.training:
-                    for (idx, contour) in self.segment(image):
+                    for (contour, idx) in self.segment(image):
                         contour = self.resize(contour)
                         contour = self.center(contour)
                         contour = self.normalise(contour)
-                        processed.append(contour)
+                        processed.append((contour, idx))
 
                 elif self.training:
                     """

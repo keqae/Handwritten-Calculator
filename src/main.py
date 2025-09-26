@@ -17,6 +17,7 @@ if str(current_dir) not in sys.path:
 from tools import visualiser
 from image_processor import ImageProcessor
 from neural_network import ConvolutionalNeuralNetwork, cross_entropy_loss, softmax_crossentropy_backward
+from equation_parse import parse
 
 
 def process_dataset(dataset_select: str):
@@ -179,16 +180,43 @@ def train():
     return model
 
 
-def pipeline():
-    pass
+def pipeline(model, expression: np.ndarray):
+    # initalise processor
 
+    processor = ImageProcessor(training=False)
+
+    # return list of segmented, processed symbols
+    expressions = processor.process(expression)
+
+    classified = []
+
+    for (symbol, idx) in expressions:
+        # add channel dimension → (28, 28, 1)
+        symbol = np.expand_dims(symbol, axis=-1)
+
+        # add batch dimension → (1, 28, 28, 1)
+        symbol = np.expand_dims(symbol, axis=0)
+
+        pred = model.predict(symbol)
+
+        class_id = np.argmax(pred, axis=1)[0] # pick the class with the highest probability
+
+        classified.append((class_id, idx))
+
+    return parse(classified)
+    
 
 def main():
-    path = "data/dataset/expressions_processed/2.png"
+    # initialise saved model
+    model = tf.keras.models.load_model("data/parameters.h5")
 
-    image = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+    # example testing expression
+    expression = cv2.imread("data/dataset/expressions_raw/12.png")
 
-    visualiser.visualise(image, "segment")
+    # pass CNN and example expression into pipeline to be used
+    result = pipeline(model, expression)
+
+    print(result)
 
 
 
