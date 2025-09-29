@@ -180,9 +180,12 @@ def train():
     return model
 
 
-def pipeline(model, expression: np.ndarray):
-    # initalise processor
+def pipeline(expression: np.ndarray):
 
+    # initialise saved model
+    model = tf.keras.models.load_model("data/parameters.h5")
+
+    # initalise processor
     processor = ImageProcessor(training=False)
 
     # return list of segmented, processed symbols
@@ -207,18 +210,13 @@ def pipeline(model, expression: np.ndarray):
     
 
 def main():
-    # initialise saved model
-    model = tf.keras.models.load_model("data/parameters.h5")
-
     # example testing expression
-    expression = cv2.imread("data/dataset/expressions_raw/12.png")
+    expression = cv2.imread("data/dataset/expressions_raw/18.png")
 
     # pass CNN and example expression into pipeline to be used
-    result = pipeline(model, expression)
+    result = pipeline(expression)
 
     print(result)
-
-
 
 
 if __name__ == "__main__":
