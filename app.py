@@ -6,7 +6,7 @@ app = Flask(__name__)
 # load the html page
 @app.route('/')
 def home():
-    return render_template('templates/index.html')
+    return render_template('index.html')
 
 # api endpoint
 @app.route('/solve', methods=['POST'])
