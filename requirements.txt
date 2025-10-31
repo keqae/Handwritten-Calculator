@@ -1,5 +1,5 @@
 numpy
 tensorflow
 opencv-python
-easyocr
+flask
 matplotlib
