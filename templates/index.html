@@ -1,16 +1,27 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Handwritten Calculator</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-        
-        <!--add favicon-->
-        <link rel="icon" sizes="64x64" href="{{ url_for('static', filename='images/favicon.ico')}}?v=1" type='image/x-icon'>
-    </head>
+<head>
+    <title>Handwritten Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <!--add favicon-->
+    <link rel="icon" sizes="64x64" href="{{ url_for('static', filename='images/favicon.ico')}}?v=1" type='image/x-icon'>
+</head>
 
-    <body>
-        <div class="container">
-            <div class="pattern-bg"></div>
+<body>
+    
+    <div class="container">
+        <div class="pattern-bg">
+            <div class="grid-container">
+                <div class="grid-item">1</div>
+                <div class="grid-item">2</div>
+                <div class="grid-item">3</div>
+                <div class="grid-item">4</div>
+                <div class="grid-item">5</div>
+            </div>
         </div>
-    </body>
+    </div>
+
+
+</body>
 </html>

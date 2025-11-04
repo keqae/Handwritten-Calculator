@@ -1,4 +1,3 @@
-
 html, body {
     margin: 0;
     padding: 0;
@@ -16,10 +15,30 @@ html, body {
 .pattern-bg {
     flex: 1;
     background: repeating-linear-gradient(
-    135deg,
-    #232526 0px,
-    #232526 60px,
-    #23252699 70px,
-    #414345 130px
+        135deg,
+        #232526 0px,
+        #232526 60px,
+        #23252699 70px,
+        #414345 130px
     );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 800px;
+    width: 100%;
+}
+
+.grid-item {
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    padding: 40px;
+    min-height: 150px;
 }
