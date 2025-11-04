@@ -25,24 +25,25 @@ html, body {
     align-items: center;
     justify-content: center;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 .grid-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    max-width: 800px;
+    max-width: 2000px;
     width: 100%;
-
-    grid-auto-rows: 4fr;
+    height: 100%;
+    grid-template-rows: repeat(4, 1fr);
 }
+
 
 .grid-item {
     background: rgba(255, 255, 255, 0.75);
     border: 1px solid rgba(255, 255, 255, 0.9);
     border-radius: 8px;
     padding: 40px;
-    min-height: 150px;
 }
 
 .span-3-rows {
