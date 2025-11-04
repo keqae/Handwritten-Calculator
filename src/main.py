@@ -193,7 +193,7 @@ def pipeline(expression: np.ndarray):
 
     classified = []
 
-    for (symbol, idx) in expressions:
+    for symbol in expressions:
         # add channel dimension → (28, 28, 1)
         symbol = np.expand_dims(symbol, axis=-1)
 
@@ -204,7 +204,7 @@ def pipeline(expression: np.ndarray):
 
         class_id = np.argmax(pred, axis=1)[0] # pick the class with the highest probability
 
-        classified.append((class_id, idx))
+        classified.append(class_id)
 
     return parse(classified)
     

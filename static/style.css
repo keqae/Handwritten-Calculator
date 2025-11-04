@@ -38,7 +38,6 @@ html, body {
     grid-template-rows: repeat(4, 1fr);
 }
 
-
 .grid-item {
     background: rgba(255, 255, 255, 0.75);
     border: 1px solid rgba(255, 255, 255, 0.9);

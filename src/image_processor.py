@@ -80,7 +80,6 @@ class ImageProcessor:
         segments = []
         in_char = False
         start = 0
-        char_idx = 0
 
         for idx, column_value in enumerate(projection):
             # keep track of where the character started
@@ -93,14 +92,12 @@ class ImageProcessor:
                 in_char = False
                 end = idx
                 char_img = image[:, start:end]
-                segments.append((char_img, char_idx)) # add char idx
-
-                char_idx += 1 # increase character count
+                segments.append(char_img) # add char idx
 
         # handle case where last character reaches image boundary
         if in_char:
             char_img = image[:, start:]
-            segments.append((char_img. char_idx)) # add char idx
+            segments.append(char_img) # add char idx
 
         return segments
 
