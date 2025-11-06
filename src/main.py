@@ -182,6 +182,10 @@ def train():
 
 def pipeline(expression: np.ndarray):
 
+    # debug check for after expression passed into pipeline
+    print(f"inside pipeline: {expression.shape}")
+    print(f"inside pipeline: {type(expression)}")
+
     # initialise saved model
     model = tf.keras.models.load_model("data/parameters.h5")
 
@@ -192,6 +196,8 @@ def pipeline(expression: np.ndarray):
     expressions = processor.process(expression)
 
     classified = []
+
+    print(f"amount of contours: {len(expressions)}")
 
     for symbol in expressions:
         # add channel dimension → (28, 28, 1)
@@ -206,6 +212,8 @@ def pipeline(expression: np.ndarray):
 
         classified.append(class_id)
 
+    print(f"classified symbols: {classified}")
+    
     return parse(classified)
     
 

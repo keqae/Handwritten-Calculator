@@ -38,7 +38,6 @@ def solve():
         result_dict = pipeline(image)
 
         # debug prints
-
         if result_dict is None:
             print("Result dictionary is None")
         

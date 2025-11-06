@@ -92,12 +92,12 @@ class ImageProcessor:
                 in_char = False
                 end = idx
                 char_img = image[:, start:end]
-                segments.append(char_img) # add char idx
+                segments.append((char_img)) # add char idx
 
         # handle case where last character reaches image boundary
         if in_char:
             char_img = image[:, start:]
-            segments.append(char_img) # add char idx
+            segments.append((char_img)) # add char idx
 
         return segments
 
@@ -125,6 +125,9 @@ class ImageProcessor:
                 image = self.denoise(image)
                 print(f"DEBUG: After denoise: shape: {image.shape}, min: {image.min()}, max: {image.max()}")
 
+                image = self.binarise(image)
+                print(f"DEBUG: After binarise: shape: {image.shape}, min: {image.min()}, max: {image.max()}")
+
                 image = self.invert(image)
                 print(f"DEBUG: After invert: shape: {image.shape}, min: {image.min()}, max: {image.max()}")
 
@@ -133,7 +136,7 @@ class ImageProcessor:
                 print(f"DEBUG: Non-zero pixels after invert: {non_zero_count}")
 
                 if not self.training:
-                    for (idx, contour) in self.segment(image):
+                    for contour in self.segment(image):
                         contour = self.resize(contour)
                         contour = self.center(contour)
                         contour = self.normalise(contour)
@@ -165,11 +168,11 @@ class ImageProcessor:
                 image = self.binarise(image)
 
                 if not self.training:
-                    for (contour, idx) in self.segment(image):
+                    for contour in self.segment(image):
                         contour = self.resize(contour)
                         contour = self.center(contour)
                         contour = self.normalise(contour)
-                        processed.append((contour, idx))
+                        processed.append(contour)
 
                 elif self.training:
                     """
