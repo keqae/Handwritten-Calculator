@@ -40,8 +40,6 @@ def solve():
         # debug prints
         if result_dict is None:
             print("Result dictionary is None")
-        
-
 
         print(f"Result: {result_dict}")
 
@@ -49,6 +47,7 @@ def solve():
 
     except Exception as e:
         print(f"Error in backend: {e}")
+
 
 if __name__ == '__main__':
     # make it accessible for cloud containers (like codespace)

@@ -26,8 +26,25 @@ def parse(classified: list[int]) -> str:
 
     print(expression)
 
-    return {
-        "expression": expression,
-        "result": eval(expression)
-        }
+    try: 
+        result = eval(expression)
+
+        result_dict = {
+            "expression": expression,
+            "result": result
+            }
+        
+    except ZeroDivisionError:
+        result_dict = {
+            "expression": expression,
+            "result": "MATH ERROR: Can't divide by 0"
+            }
+    
+    except SyntaxError:
+        result_dict = {
+            "expression": expression,
+            "result": "SYNTAX ERROR"
+            }
+        
+    return result_dict
 
