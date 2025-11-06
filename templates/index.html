@@ -18,13 +18,59 @@
                 <div class="grid-item span-3-rows">File Upload
                     <form id="fileUpload">
                         <input type="file" id="imageInput" accept="image/*" required>
-                        <button type="submit">Solve</button>
+                        <button type="submit" class="button">Solve</button>
                     </form>
                 </div>
 
                 <div class="grid-item" id="equationDisplay">Equation Display</div>
                 <div class="grid-item" id="resultOutput">Result Output</div>
-                <div class="grid-item" id="errorForm">Error Pop-up</div>
+                <div class="grid-item" id="errorForm">Error Pop-up
+                    <button class="button" onclick="openForm()">Open Form</button>
+                </div>
+                
+                <div class="error-overlay" id="errorOverlay" onclick="closeFormOnOverlay(event)">
+                    <div class="error-form">
+                        <button class="close-btn" onclick="closeForm()">&times;</button>
+
+                        <h2>Did I read your expression wrong? Tell me about it!</h2>
+
+                        <form onsubmit="submitForm(event)">
+                            <div class="form-group">
+                                <label for="error-expression">What was the correct expression?</label>
+                                <input type="text" id="error-expression" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="error-classified">What did I read it as?</label>
+                                <input type="text" id="error-classified" required>
+                            </div>
+
+                            <button type="submit" class="button">Submit</button>                    
+                        </form>
+                    </div>
+                </div>
+
+                <script>
+                    function openForm() {
+                        document.getElementById("errorOverlay").classList.add("active")
+                    }
+
+                    function closeForm() {
+                        document.getElementById("errorOverlay").classList.remove("active")
+                    }
+
+                    function submitForm(event) {
+                        event.preventDefault();
+                        alert('Form submitted!');
+                        closeModal();
+                        event.target.reset();
+                    }
+
+                    function closeModalOnOverlay(event) {
+                        if (event.target === event.currentTarget) {
+                        closeModal();
+                    }}
+                </script>
 
                 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
@@ -81,7 +127,7 @@
 
                         reader.onerror = (error) => {
                             console.error("File Reader error:", error);
-                            resultDiv.textContent = `Could not read the uploaded file: ${error}$`;
+                            resultDiv.textContent = `Could not read the uploaded file: ${error}`;
                         }
                     });
                 </script>
