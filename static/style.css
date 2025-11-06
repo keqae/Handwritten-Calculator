@@ -83,3 +83,83 @@ html, body {
     animation: slideUp 0.3s ease;
     position: relative;
 }
+
+.submit-button {
+  all: unset;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0.6em 2em;
+  border: #23252699 solid 0.15em;
+  border-radius: 0.25em;
+  color: #23252699;
+  font-size: 1.5em;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border 300ms, color 300ms;
+  user-select: none;
+}
+
+.submit-button p {
+  z-index: 1;
+}
+
+.submit-button:hover {
+  color: #212121;
+}
+
+.submit-button:active {
+  border-color: teal;
+}
+
+.submit-button::after, .button::before {
+  content: "";
+  position: absolute;
+  width: 9em;
+  aspect-ratio: 1;
+  background: #23252699;
+  opacity: 50%;
+  border-radius: 50%;
+  transition: transform 500ms, background 300ms;
+}
+
+.submit-button::before {
+  left: 0;
+  transform: translateX(-8em);
+}
+
+.submit-button::after {
+  right: 0;
+  transform: translateX(8em);
+}
+
+.submit-button:hover:before {
+  transform: translateX(-1em);
+}
+
+.submit-button:hover:after {
+  transform: translateX(1em);
+}
+
+.submit-button:active:before,
+.submit-button:active:after {
+  background: #23252699;
+}
+
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
