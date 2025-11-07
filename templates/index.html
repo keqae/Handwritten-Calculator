@@ -6,6 +6,11 @@
     
     <!--add favicon-->
     <link rel="icon" sizes="64x64" href="{{ url_for('static', filename='images/favicon.ico')}}?v=1" type='image/x-icon'>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
@@ -13,23 +18,18 @@
     <div class="container">
         <div class="pattern-bg">
             <div class="grid-container">
-                <div class="grid-item span-2-cols">Handwritten Calculator</div>
+                <div class="grid-item span-2-cols"><h1>Handwritten Calculator</h1></div>
 
-                <div class="grid-item span-3-rows">File Upload
+                <div class="grid-item span-3-rows"><h2>File Upload</h2>
                     <form id="fileUpload">
                         <input type="file" id="imageInput" accept="image/*" required>
-                        <button type="submit" class="submit-button">
-                                <span class="circle" aria-hidden="true">
-                                    <span class="icon arrow"></span>
-                                </span>
-                                <span class="button-text">Solve</span>
-                        </button>
+                        <button type="submit" class="button">Solve</button>
                     </form>
                 </div>
 
-                <div class="grid-item" id="equationDisplay">Equation Display</div>
-                <div class="grid-item" id="resultOutput">Result Output</div>
-                <div class="grid-item" id="errorForm">Error Pop-up
+                <div class="grid-item" id="equationDisplay"><h2>Equation Display</h2></div>
+                <div class="grid-item" id="resultOutput"><h2>Result Output</h2></div>
+                <div class="grid-item" id="errorForm"><h2>Error Pop-up</h2><br>
                     <button class="button" onclick="openForm()">Open Form</button>
                 </div>
                 
@@ -50,7 +50,7 @@
                                 <input type="text" id="error-classified" required>
                             </div>
 
-                            <button type="submit" class="submit-button">Submit</button>                    
+                            <button type="submit" class="button">Submit</button>                    
                         </form>
                     </div>
                 </div>
