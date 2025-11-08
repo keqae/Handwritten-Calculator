@@ -80,61 +80,62 @@
                 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
                 <script>
+                console.log("console is working")
+                // assign variables to all components
+                const form = document.getElementById('fileUpload');
+                const imageInput = document.getElementById('imageInput');
+                const equationDisplay = document.getElementById('equationDisplay')
+                const resultDiv = document.getElementById('resultOutput');
 
-                    console.log("console is working")
-
-                    // assign variables to all components
-                    const form = document.getElementById('fileUpload');
-                    const imageInput = document.getElementById('imageInput');
-                    const equationDisplay = document.getElementById('equationDisplay')
-                    const resultDiv = document.getElementById('resultOutput');
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
                     
-                    form.addEventListener('submit', async (e) => {
-                        e.preventDefault();
+                    // presence check for file
+                    if (!imageInput.files || imageInput.files.length === 0) {
+                        console.log("No file selected")
+                        return;
+                    }
+                    
+                    console.log(`File selected: ${imageInput.files[0].name}`); 
+                    equationDisplay.innerHTML = "<h2>Processing...</h2>";
+                    resultDiv.innerHTML = '<h2>Processing...</h2>';
+                    
+                    try {
+                        // read the uploaded file
+                        const file = imageInput.files[0];
+                        const reader = new FileReader();
                         
-                        // presence check for file
-                        if (!imageInput.files || imageInput.files.length === 0) {
-                            console.log("No file selected")
-                            return;
-                        }
+                        reader.onerror = (error) => {
+                            console.error("File Reader error:", error);
+                            resultDiv.textContent = `Could not read the uploaded file: ${error}`;
+                        };
                         
-                        console.log(`File selected: ${imageInput.files[0].name}$`)
-
-                        equationDisplay.textContent = "Processing...";
-                        resultDiv.textContent = 'Processing...';
-                        
-                        try {
-                            // read the uploaded file
-                            const file = imageInput.files[0];
-                            const reader = new FileReader();
+                        reader.onload = async (event) => {
+                            const imageData = event.target.result; // base64 string
+                            console.log("Received file, sending to backend...")
                             
-                            reader.onload = async (event) => {
-                                const imageData = event.target.result; // base64 string
-                                
-                                console.log("Received file, sending to backend...")
-
+                            try {
                                 // send to flask backend
                                 const response = await axios.post('/solve', {
                                     image: imageData
                                 });
                                 
                                 // display equation and result
-                                equationDisplay.innerHTML = `<h3>Equation:</h3><p>${response.data.expression}</p>`;
-                                resultDiv.innerHTML = `<h3>Result:</h3><p>${response.data.result}</p>`;
-                            };
-                            
-                            reader.readAsDataURL(file); // convert to base64
-                            
-                        } catch (error) {
-                            console.error('Error:', error);
-                            resultDiv.textContent = 'Error: ' + error.message;
-                        }
-
-                        reader.onerror = (error) => {
-                            console.error("File Reader error:", error);
-                            resultDiv.textContent = `Could not read the uploaded file: ${error}`;
-                        }
-                    });
+                                equationDisplay.innerHTML = `<h2>Equation:<br>${response.data.expression}</h2>`;
+                                resultDiv.innerHTML = `<h2>Result:<br>${response.data.result}</h2>`;
+                            } catch (error) {
+                                console.error('Error:', error);
+                                resultDiv.textContent = 'Error: ' + error.message;
+                            }
+                        };
+                        
+                        reader.readAsDataURL(file); // convert to base64
+                        
+                    } catch (error) {
+                        console.error('Error:', error);
+                        resultDiv.textContent = 'Error: ' + error.message;
+                    }
+                });
                 </script>
 
             </div>

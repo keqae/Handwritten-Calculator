@@ -12,14 +12,16 @@ html, body {
     display: flex;
 }
 
-.h1 {
+h1 {
   font-family: 'Roboto', Arial, sans-serif;
-  font-size: larger;
+  font-variation-settings: "wdth" 200;
+  font-weight: 300;
 }
 
-.h2 {
+h2 {
   font-family: 'Roboto', Arial, sans-serif;
-  font-size: medium;
+  font-variation-settings: "wdth" 50;
+  font-weight: 300;
 }
 
 
