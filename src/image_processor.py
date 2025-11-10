@@ -92,12 +92,12 @@ class ImageProcessor:
                 in_char = False
                 end = idx
                 char_img = image[:, start:end]
-                segments.append((char_img)) # add char idx
+                segments.append((char_img))
 
         # handle case where last character reaches image boundary
         if in_char:
             char_img = image[:, start:]
-            segments.append((char_img)) # add char idx
+            segments.append((char_img))
 
         return segments
 

@@ -20,16 +20,22 @@
             <div class="grid-container">
                 <div class="grid-item span-2-cols"><h1>Handwritten Calculator</h1></div>
 
-                <div class="grid-item span-3-rows"><h2>File Upload</h2>
+                <div class="grid-item"><h2>File Upload</h2>
                     <form id="fileUpload">
                         <input type="file" id="imageInput" accept="image/*" required>
                         <button type="submit" class="button">Solve</button>
                     </form>
                 </div>
-
+                
                 <div class="grid-item" id="equationDisplay"><h2>Equation Display</h2></div>
+
+                <div class="grid-item span-2-rows" id="imagePreview">
+                    <h2>Image Preview</h2>
+                    <img id="preview" style="max-width: 500%; display: none;">
+                </div>
+
                 <div class="grid-item" id="resultOutput"><h2>Result Output</h2></div>
-                <div class="grid-item" id="errorForm"><h2>Error Pop-up</h2><br>
+                <div class="grid-item" id="errorForm"><h2>Error Form</h2><br>
                     <button class="button" onclick="openForm()">Open Form</button>
                 </div>
                 
@@ -86,6 +92,26 @@
                 const imageInput = document.getElementById('imageInput');
                 const equationDisplay = document.getElementById('equationDisplay')
                 const resultDiv = document.getElementById('resultOutput');
+                const preview = document.getElementById('preview')
+
+                // handle preview
+                imageInput.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+                    const reader = new FileReader();
+
+                    // file type check
+                    if (file.type !== 'image/png') {
+                        resultDiv.innerHTML = "<h2>Wrong file type selected. Please choose a PNG file.</h2>";
+                        imageInput.value = ''; // clear the input
+                        return;
+                    }
+
+                    const url = URL.createObjectURL(file) // use object URLs 
+                    preview.src = url;
+                    preview.style.display = 'block';
+
+                });
+
 
                 form.addEventListener('submit', async (e) => {
                     e.preventDefault();
@@ -95,7 +121,8 @@
                         console.log("No file selected")
                         return;
                     }
-                    
+
+
                     console.log(`File selected: ${imageInput.files[0].name}`); 
                     equationDisplay.innerHTML = "<h2>Processing...</h2>";
                     resultDiv.innerHTML = '<h2>Processing...</h2>';

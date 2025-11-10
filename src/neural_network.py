@@ -8,6 +8,7 @@ def he_normal_numpy(shape):
     stddev = np.sqrt(2. / fan_in)
     return np.random.normal(loc=0.0, scale=stddev, size=shape)
 
+
 class BaseLayer:
     def __init__(self, name:str, id:int, trainable:bool = True):
         # basic attributes
